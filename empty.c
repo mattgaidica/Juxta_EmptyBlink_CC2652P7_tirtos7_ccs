@@ -73,32 +73,17 @@ void blinkLoop(uint8_t runOnce)
     }
 }
 
-void sensorSniff(void)
-{
-    MC3635_stop(spiHandle);
-    MC3635_SetSniffThreshold(spiHandle, MC36XX_AXIS_X, 2);
-    MC3635_SetSniffThreshold(spiHandle, MC36XX_AXIS_Y, 2);
-    MC3635_SetSniffThreshold(spiHandle, MC36XX_AXIS_Z, 2);
-    MC3635_SetSniffDetectCount(spiHandle, MC36XX_AXIS_X, 3);
-    MC3635_SetSniffDetectCount(spiHandle, MC36XX_AXIS_Y, 3);
-    MC3635_SetSniffDetectCount(spiHandle, MC36XX_AXIS_Z, 3);
-    MC3635_SetSniffAndOrN(spiHandle, MC36XX_ANDORN_OR);
-    MC3635_SetSniffDeltaMode(spiHandle, MC36XX_DELTA_MODE_C2P);
-    MC3635_SetINTCtrl(spiHandle, 0, 0, 0, 0, 1); //Enable wake-up INT
-    MC3635_sniff(spiHandle);
-}
-
 void sniffInterrupt(uint_least8_t index)
 {
-    MC36XX_interrupt_event_t evt_mc36xx = {0};
-    if (spiHandle == NULL)
+    MC36XX_interrupt_event_t evt_mc36xx = { 0 };
+    if (spiHandle != NULL)
     {
-        return;
+        GPIO_write(LED_1, 1);
+        MC3635_INTHandler(spiHandle, &evt_mc36xx);
+        MC3635_sensorSniff(spiHandle);
+        GPIO_write(LED_1, 0);
     }
-    GPIO_write(LED_1, 1);
-    MC3635_INTHandler(spiHandle, &evt_mc36xx);
-    sensorSniff();
-    GPIO_write(LED_1, 0);
+
 }
 
 /*
@@ -106,7 +91,7 @@ void sniffInterrupt(uint_least8_t index)
  */
 void* mainThread(void *arg0)
 {
-    MC36XX_interrupt_event_t evt_mc36xx = {0};
+    MC36XX_interrupt_event_t evt_mc36xx = { 0 };
     blinkLoop(1);
 
     GPIO_init();
@@ -126,20 +111,11 @@ void* mainThread(void *arg0)
 //    MC3635_writeReg(spiHandle, MC36XX_REG_SCRATCH, 0xA2);
 //    uint8_t value = MC3635_readReg(spiHandle, MC36XX_REG_SCRATCH);
 
-    sensorSniff();
+    MC3635_sensorSniff(spiHandle);
     GPIO_enableInt(AXY_INT);
 
     while (1)
     {
-//        GPIO_write(LED_1, 0);
-//        uint8_t intVal = GPIO_read(AXY_INT);
-//        if (intVal == 0) {
-//            GPIO_write(LED_1, 1);
-////            MC36XX_acc_t rawAccel = MC3635_readRawAccel(spiHandle);
-//            MC3635_INTHandler(spiHandle, &evt_mc36xx);
-//            sensorSniff();
-//            sleep(1);
-//        }
         usleep(10);
     }
 
