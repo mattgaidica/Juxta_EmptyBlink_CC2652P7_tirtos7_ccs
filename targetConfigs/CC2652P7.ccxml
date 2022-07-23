@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configurations XML_version="1.2" id="configurations_0">
+    <configuration XML_version="1.2" id="Texas Instruments XDS110 USB Debug Probe_0">
+        <instance XML_version="1.2" desc="Texas Instruments XDS110 USB Debug Probe_0" href="connections/TIXDS110_Connection.xml" id="Texas Instruments XDS110 USB Debug Probe_0" xml="TIXDS110_Connection.xml" xmlpath="connections"/>
+        <connection XML_version="1.2" id="Texas Instruments XDS110 USB Debug Probe_0">
+            <instance XML_version="1.2" href="drivers/tixds510icepick_c.xml" id="drivers" xml="tixds510icepick_c.xml" xmlpath="drivers"/>
+            <instance XML_version="1.2" href="drivers/tixds510cs_dap.xml" id="drivers" xml="tixds510cs_dap.xml" xmlpath="drivers"/>
+            <instance XML_version="1.2" href="drivers/tixds510cortexM.xml" id="drivers" xml="tixds510cortexM.xml" xmlpath="drivers"/>
+            <property Type="choicelist" Value="1" id="Power Selection">
+                <choice Name="Probe supplied power" value="1">
+                    <property Type="stringfield" Value="3.3V" id="Voltage Level"/>
+                <property Type="choicelist" Value="0" id="Power Isolation"/>
+                </choice>
+            <choice Name="Target supplied power" value="0">
+                    <property Type="choicelist" Value="0" id="Voltage Selection">
+                        <choice Name="User specified value" value="1">
+                            <property Type="stringfield" Value="3.3V" id="Voltage Level"/>
+                        </choice>
+                    </property>
+                </choice>
+            </property>
+            <property Type="choicelist" Value="0" id="JTAG Signal Isolation"/>
+            <property Type="choicelist" Value="4" id="SWD Mode Settings">
+                <choice Name="cJTAG (1149.7) 2-pin advanced modes" value="enable">
+                    <property Type="choicelist" Value="1" id="XDS110 Aux Port"/>
+                <property Type="choicelist" Value="1" id="Target Scan Format"/>
+                </choice>
+            </property>
+            <property Type="choicelist" Value="0" id="The JTAG TCLK Frequency (MHz)">
+                <choice Name="Fixed with user specified value" value="SPECIFIC">
+                    <property Type="stringfield" Value="100kHz" id="-- Enter a value from 100.0kHz to 2.5MHz"/>
+                </choice>
+            </property>
+            <property Type="choicelist" Value="0" id="dataFileRequired"/>
+            <platform XML_version="1.2" id="platform_0">
+                <instance XML_version="1.2" desc="CC2652P7_0" href="devices/cc2652p7.xml" id="CC2652P7_0" xml="cc2652p7.xml" xmlpath="devices"/>
+            <device HW_revision="1" XML_version="1.2" description="SimpleLink(TM) multi-protocol CC2652P7 wireless MCU" id="CC2652P7_0" partnum="CC2652P7" simulation="no">
+                    <router HW_revision="1.0" XML_version="1.2" description="ICEPick_C Router" id="IcePick_C_0" isa="ICEPICK_C">
+                        <property Type="choicelist" Value="0" id="bypass"/>
+                    <subpath id="subpath_0">
+                            <router HW_revision="1.0" XML_version="1.2" description="CS_DAP Router" id="CS_DAP_0" isa="CS_DAP">
+                                <subpath id="subpath_1">
+                                    <cpu HW_revision="1.0" XML_version="1.2" description="Cortex_M4 CPU" deviceSim="false" id="Cortex_M4_0" isa="Cortex_M4">
+                                        <property Type="choicelist" Value="0" id="bypass"/>
+                                    </cpu>
+                                </subpath>
+                            </router>
+                        </subpath>
+                    </router>
+                </device>
+            </platform>
+        </connection>
+    </configuration>
+</configurations>
