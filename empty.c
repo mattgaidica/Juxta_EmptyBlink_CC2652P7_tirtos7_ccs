@@ -91,14 +91,13 @@ void sniffInterrupt(uint_least8_t index)
  */
 void* mainThread(void *arg0)
 {
-    MC36XX_interrupt_event_t evt_mc36xx = { 0 };
-    blinkLoop(1);
-
     GPIO_init();
     SPI_init();
 
     GPIO_write(LED_0, 0);
     GPIO_write(LED_1, 0);
+
+    blinkLoop(1); // init
 
     spiHandle = MC3635_init(CONFIG_SPI);
     if (spiHandle == NULL)
@@ -120,12 +119,4 @@ void* mainThread(void *arg0)
     }
 
     SPI_close(spiHandle);
-
-    while (1)
-    {
-        GPIO_write(LED_0, 1);
-        usleep(25000);
-        GPIO_write(LED_0, 0);
-        sleep(1);
-    }
 }
