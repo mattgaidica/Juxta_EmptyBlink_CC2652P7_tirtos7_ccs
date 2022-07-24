@@ -92,16 +92,6 @@ void sniffInterrupt(uint_least8_t index)
 void* mainThread(void *arg0)
 {
     GPIO_init();
-
-    while (1)
-        {
-            GPIO_write(LED_1, 1);
-            usleep(50000);
-            GPIO_write(LED_1, 0);
-            sleep(5);
-
-        }
-
     SPI_init();
 
     GPIO_write(LED_0, 0);
@@ -117,8 +107,8 @@ void* mainThread(void *arg0)
     MC3635_start(spiHandle);
 
     // scratch example
-//    MC3635_writeReg(spiHandle, MC36XX_REG_SCRATCH, 0xA2);
-//    uint8_t value = MC3635_readReg(spiHandle, MC36XX_REG_SCRATCH);
+    MC3635_writeReg(spiHandle, MC36XX_REG_SCRATCH, 0xA2);
+    uint8_t value = MC3635_readReg(spiHandle, MC36XX_REG_SCRATCH);
 
     MC3635_sensorSniff(spiHandle);
     GPIO_enableInt(AXY_INT);
