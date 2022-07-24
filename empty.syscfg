@@ -34,6 +34,7 @@ const Timestamp   = scripting.addModule("/ti/sysbios/runtime/Timestamp");
 /**
  * Write custom configuration values to the imported modules.
  */
+CCFG.srcClkLF           = "LF RCOSC";
 CCFG.ccfgTemplate.$name = "ti_devices_CCFG_CCFGCC26XXTemplate0";
 
 ADC1.$name              = "VBATT";

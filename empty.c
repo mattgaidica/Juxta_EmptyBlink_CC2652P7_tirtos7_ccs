@@ -92,6 +92,16 @@ void sniffInterrupt(uint_least8_t index)
 void* mainThread(void *arg0)
 {
     GPIO_init();
+
+    while (1)
+        {
+            GPIO_write(LED_1, 1);
+            usleep(50000);
+            GPIO_write(LED_1, 0);
+            sleep(5);
+
+        }
+
     SPI_init();
 
     GPIO_write(LED_0, 0);
