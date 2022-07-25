@@ -51,11 +51,6 @@
 #include "ti_drivers_config.h"
 
 // see https://github.com/mcubemems/mCube_mc36xx_arduino_driver/blob/master/MC36XX.cpp
-#define SPI_MSG_LENGTH 2
-#define READ_CMD 0x80
-#define ADDR_BIT 0x40
-unsigned char masterRxBuffer[SPI_MSG_LENGTH];
-unsigned char masterTxBuffer[SPI_MSG_LENGTH];
 SPI_Handle spiHandle;
 
 void blinkLoop(uint8_t runOnce)
